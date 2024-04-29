@@ -81,7 +81,9 @@ put_rho_hedge = function(S, E, r, bigT, sigma) {
   put_rho = -1*bigT*E*exp(-1*r*bigT)*pnorm(-1*calculate_d2(S, E, r, bigT, sigma))
   return(put_rho)
 }
+```
 
+```{r}
 ## Test code:
 calculate_d1(S = 60, E = 60, r = 0.08, bigT = 0.243836, sigma = 0.3)
 calculate_d2(S = 60, E = 60, r = 0.08, bigT = 0.243836, sigma = 0.3)
@@ -106,7 +108,7 @@ put_theta_hedge(S = 60, E = 60, r = 0.08, bigT = 90/365, sigma = 0.3)
 ui <- fluidPage(
   tabsetPanel(
     tabPanel("European Option Pricing and Hedging", fluid = TRUE,
-             titlePanel("European Option Pricing and Hedging"),
+             titlePanel("European Option Pricing and Hedging using the Black-Scholes Formula"),
              sidebarLayout(
                sidebarPanel(numericInput(inputId = "s_sel",
                                          label = "Price of the Underlying Asset:",

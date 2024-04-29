@@ -79,7 +79,7 @@ put_rho_hedge = function(S, E, r, bigT, sigma) {
 ui <- fluidPage(
   tabsetPanel(
     tabPanel("European Option Pricing and Hedging", fluid = TRUE,
-             titlePanel("European Option Pricing and Hedging"),
+             titlePanel("European Option Pricing and Hedging using the Black-Scholes Formula"),
              sidebarLayout(
                sidebarPanel(numericInput(inputId = "s_sel",
                                          label = "Price of the Underlying Asset:",
