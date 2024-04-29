@@ -1,0 +1,13 @@
+name: math321_blackscholescalculator
+title: MATH321_BlackScholesCalculator
+username: brodypinto
+account: brodypinto
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11890053
+bundleId: 8554716
+url: https://brodypinto.shinyapps.io/math321_blackscholescalculator/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: BS_Calculator.qmd|README.md
