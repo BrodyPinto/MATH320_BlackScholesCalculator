@@ -1,6 +1,5 @@
 library(shiny)
 library(tidyverse)
-options(digits = 5)
 
 ## calculate d1 for the price now, t=0:
 calculate_d1 = function(S, E, r, bigT, sigma) {
@@ -16,13 +15,15 @@ calculate_d2 = function(S, E, r, bigT, sigma) {
 
 ## calculate Call Option price now, t=0:
 call_price = function(S, E, r, bigT, sigma) {
-  C_E = (S*pnorm(calculate_d1(S, E, r, bigT, sigma))) - (E*exp(-r*bigT)*pnorm(calculate_d2(S, E, r, bigT, sigma)))
+  C_E = (S*pnorm(calculate_d1(S, E, r, bigT, sigma))) - 
+    (E*exp(-r*bigT)*pnorm(calculate_d2(S, E, r, bigT, sigma)))
   return(C_E)
 }
 
 ## calculate Put Option price now, t=0:
 put_price = function(S, E, r, bigT, sigma) {
-  P_E = (E*exp(-r*bigT)*pnorm(-1*calculate_d2(S, E, r, bigT, sigma))) - (S*pnorm(-1*calculate_d1(S, E, r, bigT, sigma)))
+  P_E = (E*exp(-r*bigT)*pnorm(-1*calculate_d2(S, E, r, bigT, sigma))) - 
+    (S*pnorm(-1*calculate_d1(S, E, r, bigT, sigma)))
   return(P_E)
 }
 
@@ -49,12 +50,14 @@ gamma_hedge = function(S, E, r, bigT, sigma) {
 ## Theta - Change in Options as TIME changes
 ## for calls:
 call_theta_hedge = function(S, E, r, bigT, sigma) {
-  call_theta = -1*((-1*(S*sigma*exp(-1*(calculate_d1(S, E, r, bigT, sigma)^2)/2))/(2*sqrt(2*pi)*sqrt(bigT))) - (r*E*exp(-1*r*bigT)*pnorm(calculate_d2(S, E, r, bigT, sigma))))
+  call_theta = -1*((-1*(S*sigma*exp(-1*(calculate_d1(S, E, r, bigT, sigma)^2)/2))/(2*sqrt(2*pi)*sqrt(bigT))) - 
+                     (r*E*exp(-1*r*bigT)*pnorm(calculate_d2(S, E, r, bigT, sigma))))
   return(call_theta)
 }
-## for puts (not working?):
+## for puts:
 put_theta_hedge = function(S, E, r, bigT, sigma) {
-  put_theta = -1*((-1*(S*sigma*exp(-1*(calculate_d1(S, E, r, bigT, sigma)^2)/2))/(2*sqrt(2*pi)*sqrt(bigT))) + (r*E*exp(-1*r*bigT)*pnorm(-1*calculate_d2(S, E, r, bigT, sigma))))
+  put_theta = -1*((-1*(S*sigma*exp(-1*(calculate_d1(S, E, r, bigT, sigma)^2)/2))/(2*sqrt(2*pi)*sqrt(bigT))) + 
+                    (r*E*exp(-1*r*bigT)*pnorm(-1*calculate_d2(S, E, r, bigT, sigma))))
   return(put_theta)
 }
 
@@ -103,12 +106,6 @@ ui <- fluidPage(
                                         value = 30,
                                         step = 0.5)),
                mainPanel(tableOutput(outputId = "pricing_table"))
-             )
-    ), 
-    tabPanel("Pricing Visualization", fluid = TRUE,
-             sidebarLayout(
-               sidebarPanel(),
-               mainPanel()
              )
     )
   )
@@ -174,7 +171,7 @@ server <- function(input, output, session) {
                            sigma = (input$sigma_sel)/100)
     
     table = data.frame(
-      Option_Type = c("Call Option", "Put Option"),
+      Option_Type = c("European Call Option", "European Put Option"),
       Option_Price = c(callprice, putprice),
       Delta_Hedge = c(calldelta, putdelta),
       Gamma_Hedge = c(gamma, gamma),
